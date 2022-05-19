@@ -8,19 +8,19 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\dlls\</OutputPath>
+    <OutputPath>../dlls/</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <DocumentationFile>..\dlls\PythonLogging.xml</DocumentationFile>
+    <DocumentationFile>../dlls/PythonLogging.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\dlls\</OutputPath>
+    <OutputPath>../dlls/</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <DocumentationFile>..\dlls\PythonLogging.xml</DocumentationFile>
+    <DocumentationFile>../dlls/PythonLogging.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
   </PropertyGroup>
@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <Reference Include="Python.Runtime">
-      <HintPath>..\.venv\Lib\site-packages\pythonnet\runtime\Python.Runtime.dll</HintPath>
+      <HintPath>../.venv/Lib/site-packages/pythonnet/runtime/Python.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
 
