@@ -46,3 +46,10 @@ test-output.xml
 # PyCharm generated files
 .idea
 
+# VisualStudio generated files
+/PythonLogging/.vs/
+/PythonLogging/bin/
+/PythonLogging/obj/
+
+# VisualStudio output
+dlls

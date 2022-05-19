@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "py-mel-logging"
-version = "0.1.0"
+version = "0.1.dev0"
 
 description = "Python for Microsoft.Extensions.Logging library"
 readme = "README.rst"
@@ -22,12 +22,13 @@ classifiers = [
 ]
 
 packages = [
-    { include = "ansys", from = "src" },
+    { include = "py_mel_logging", from = "src" },
 ]
 include = ["py.typed"]
 
 [tool.poetry.dependencies]
 python = ">=3.8"
+pythonnet = "^3.0.0a2"
 
 Sphinx =  {version="^4.4", optional=true}
 numpydoc =  {version="^1.2", optional=true}
