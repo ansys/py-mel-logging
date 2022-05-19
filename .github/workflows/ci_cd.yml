@@ -27,9 +27,13 @@ jobs:
           pip install poetry
           poetry install
 
-      - name: Run dotnet build
+      - name: Run nuget restore
         run: |
           cd PythonLogging
+          nuget restore ./PythonLogging.csproj
+
+      - name: Run dotnet build
+        run: |
           dotnet build
 
   style:
