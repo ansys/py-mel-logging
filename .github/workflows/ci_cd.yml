@@ -34,6 +34,7 @@ jobs:
 
       - name: Run dotnet build
         run: |
+          cd PythonLogging
           dotnet build
 
   style:
