@@ -11,6 +11,14 @@ on:
       - main
 
 jobs:
+  dotnet-build:
+    name: Build .NET project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run dotnet build
+        run: dotnet publish -o ./dlls
+
   style:
     name: Pre-commit Check
     runs-on: ubuntu-latest
@@ -109,7 +117,7 @@ jobs:
 
   Release:
     if: contains(github.ref, 'refs/tags')
-    needs: [main, style, docs]
+    needs: [dotnet-build, main, style, docs]
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python
