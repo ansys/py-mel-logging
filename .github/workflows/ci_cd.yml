@@ -63,7 +63,7 @@ jobs:
       - name: Upload wheel
         uses: actions/upload-artifact@v2
         with:
-          name: ansys-product-library-wheel
+          name: py-mel-logging-wheel
           path: dist/
           retention-days: 7
 
@@ -121,7 +121,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: ansys-product-library-wheel
+          name: py-mel-logging-wheel
 
       - uses: actions/download-artifact@v2
         with:

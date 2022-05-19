@@ -3,18 +3,17 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "ansys-product-library"
+name = "py-mel-logging"
 version = "0.1.0"
 
-description = "Template PyAnsys library"
+description = "Python for Microsoft.Extensions.Logging library"
 readme = "README.rst"
-homepage = "https://github.com/pyansys/template/"
+homepage = "https://github.com/pyansys/py-mel-logging/"
 
-authors = ["Ansys, Inc."] # this is required
-maintainers = ["PyAnsys developers <pyansys.support@ansys.com>"] # You can change the name. The email group works.
+authors = ["Ansys, Inc."]
+maintainers = ["PyAnsys developers <pyansys.support@ansys.com>"]
 license = "MIT"
 
-# Less than critical but helpful
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
@@ -28,8 +27,7 @@ packages = [
 include = ["py.typed"]
 
 [tool.poetry.dependencies]
-python = ">=3.7" # Plan on supporting only the currently supported versions of Python
-importlib-metadata = {version = "^4.0", python = "<3.8"}
+python = ">=3.8"
 
 Sphinx =  {version="^4.4", optional=true}
 numpydoc =  {version="^1.2", optional=true}
@@ -49,13 +47,13 @@ test = ["pytest", "pytest-cov"]
 
 [tool.black]
 line-length = 100
-target-version = ['py37']
+target-version = ['py38']
 
 [tool.pydocstyle]
 convention = "numpy"
 
 [tool.mypy]
-python_version = 3.7
+python_version = 3.8
 strict = false # set to 'true' for stricter type checking
 mypy_path = "src"
 namespace_packages = true
