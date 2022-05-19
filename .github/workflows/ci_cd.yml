@@ -17,7 +17,9 @@ jobs:
 
     steps:
       - name: Run dotnet build
-        run: dotnet publish -o ./dlls
+        run: |
+          cd PythonLogging
+          dotnet build
 
   style:
     name: Pre-commit Check
@@ -41,6 +43,7 @@ jobs:
 
   main:
     name: Build and Testing
+    needs: [dotnet-build]
     runs-on: ubuntu-latest
 
     steps:
@@ -77,6 +80,7 @@ jobs:
 
   docs:
     name: Build Documentation
+    needs: [dotnet-build]
     runs-on: ubuntu-latest
 
     steps:
