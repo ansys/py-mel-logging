@@ -1,7 +1,7 @@
 """Sphinx documentation configuration file."""
 from datetime import datetime
 
-from ansys.product.library import __version__
+from py_mel_logging import __version__
 from pyansys_sphinx_theme import pyansys_logo_black
 
 # Project information

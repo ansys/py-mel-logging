@@ -1,10 +1,12 @@
 """Tests for PythonLogger."""
+import os
 from io import StringIO
 import logging
 
 from clr_loader import get_coreclr
 
-rt = get_coreclr(r"..\config.json")
+test_path = os.getcwd()
+rt = get_coreclr(test_path + r"\..\config.json")
 from pythonnet import set_runtime
 
 set_runtime(rt)
