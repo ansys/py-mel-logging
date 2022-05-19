@@ -1,7 +1,7 @@
 """Tests for PythonLogger."""
+import logging
 import os
 from io import StringIO
-import logging
 
 from clr_loader import get_coreclr
 

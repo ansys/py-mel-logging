@@ -1,8 +1,8 @@
 """Implementation of PythonLoggerProvider."""
-import clr
+import clr  # type: ignore
 
-clr.AddReference("Microsoft.Extensions.Logging.Abstractions")
-from Microsoft.Extensions.Logging import ILogger
+clr.AddReference(r"dlls\netstandard2.0\Microsoft.Extensions.Logging.Abstractions")
+from Microsoft.Extensions.Logging import ILogger  # type: ignore
 
 
 class PythonLoggerProvider:

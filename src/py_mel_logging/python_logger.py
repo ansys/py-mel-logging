@@ -3,14 +3,14 @@ import logging
 from string import Template
 from typing import TypeVar
 
-import clr
+import clr  # type: ignore
 
 from .i18n import i18n
 
 clr.AddReference(r"dlls\netstandard2.0\Microsoft.Extensions.Logging.Abstractions")
-from Microsoft.Extensions.Logging import EventId, LogLevel
-from System import Exception as DotNetException
-from System import Func, IDisposable
+from Microsoft.Extensions.Logging import EventId, LogLevel  # type: ignore
+from System import Exception as DotNetException  # type: ignore
+from System import Func, IDisposable  # type: ignore
 
 TState = TypeVar("TState")
 
