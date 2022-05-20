@@ -1,8 +1,12 @@
 """Sphinx documentation configuration file."""
 from datetime import datetime
+import os
+import sys
 
 from py_mel_logging import __version__
 from pyansys_sphinx_theme import pyansys_logo_black
+
+sys.path.append(os.path.abspath(os.getcwd() + r"/../../dlls/netstandard2.0"))
 
 # Project information
 project = "py-mel-logging"
