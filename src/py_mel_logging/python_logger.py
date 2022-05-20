@@ -7,7 +7,7 @@ import clr  # type: ignore
 
 from .i18n import i18n
 
-clr.AddReference(r"dlls/netstandard2.0/Microsoft.Extensions.Logging.Abstractions")
+clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
 from Microsoft.Extensions.Logging import EventId, LogLevel  # type: ignore
 from System import Exception as DotNetException  # type: ignore
 from System import Func, IDisposable  # type: ignore

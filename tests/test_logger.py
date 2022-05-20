@@ -1,7 +1,10 @@
 """Tests for PythonLogger."""
 import logging
 import os
+import sys
 from io import StringIO
+
+sys.path.append(os.path.abspath(os.getcwd() + r"/../dlls/netstandard2.0"))
 
 from clr_loader import get_coreclr
 
@@ -16,10 +19,10 @@ clr.AddReference("System")
 from System import Exception as DotNetException
 from System import Func, String
 
-clr.AddReference(r"../dlls/netstandard2.0/PythonLogging")
+clr.AddReference(r"PythonLogging")
 from Python.Logging import DotNetPythonLogger
 
-clr.AddReference(r"../dlls/netstandard2.0/Microsoft.Extensions.Logging.Abstractions")
+clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
 from Microsoft.Extensions.Logging import EventId, LogLevel
 
 from py_mel_logging import PythonLogger
