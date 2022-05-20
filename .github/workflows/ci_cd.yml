@@ -17,6 +17,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/upload-artifact@v2
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -31,6 +32,11 @@ jobs:
         run: |
           cd PythonLogging
           dotnet build
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: PythonLogging
+          path: dlls/
 
   style:
     name: Pre-commit Check
@@ -59,6 +65,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v3
+        with:
+          name: PythonLogging
+          path: dlls/
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: dlls
+
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -96,6 +111,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v3
+        with:
+          name: PythonLogging
+          path: dlls/
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: dlls
+
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
