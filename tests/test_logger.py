@@ -16,10 +16,10 @@ clr.AddReference("System")
 from System import Exception as DotNetException
 from System import Func, String
 
-clr.AddReference(r"dlls/netstandard2.0/PythonLogging")
+clr.AddReference(r"../dlls/netstandard2.0/PythonLogging")
 from Python.Logging import DotNetPythonLogger
 
-clr.AddReference(r"dlls/netstandard2.0/Microsoft.Extensions.Logging.Abstractions")
+clr.AddReference(r"../dlls/netstandard2.0/Microsoft.Extensions.Logging.Abstractions")
 from Microsoft.Extensions.Logging import EventId, LogLevel
 
 from py_mel_logging import PythonLogger
