@@ -23,7 +23,10 @@ namespace Python.Logging
       /// <param name="logger">The Python logger to use for logging.</param>
       public DotNetPythonLogger(PyObject logger)
       {
-         PythonEngine.Initialize();
+         if (!PythonEngine.IsInitialized)
+         {
+            PythonEngine.Initialize();
+         }
          _logger = logger;
       }
 

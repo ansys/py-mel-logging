@@ -1,23 +1,40 @@
 """Implementation of PythonLoggerProvider."""
+import logging
+
 import clr  # type: ignore
 
-clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
-from Microsoft.Extensions.Logging import ILogger  # type: ignore
+clr.AddReference("System")
+from System import Func  # type: ignore
+
+clr.AddReference(r"PythonLogging")
+from Python.Logging import PythonLoggerProvider  # type: ignore
+
+clr.AddReference(r"Python.Runtime")
+from Python.Runtime import PyObject  # type: ignore
+
+from .python_logger import PythonLogger
 
 
-class PythonLoggerProvider:
-    """TODO."""
+def create_logger_provider(log_level: int, log_handler: logging.Handler) -> PythonLoggerProvider:
+    """
+    Create a new .Net Microsoft.Extensions.Logging ILoggingProvider \
+    that logs using a Python logger with the given logging.Handler.
 
-    def create_logger(self, category_name: str) -> ILogger:
-        """
-        TODO.
+    Parameters
+    ----------
+    log_level The log level of the logger to create.
+    log_handler The logging handler to use.
 
-        Parameters
-        ----------
-        category_name
+    Returns
+    -------
+    A .Net ILoggingProvider that creates loggers that log to a python
+    logger.
+    """
 
-        Returns
-        -------
-        TODO
-        """
-        raise NotImplementedError
+    def create_logger_func() -> PythonLogger:
+        pylogger = PythonLogger(log_level, log_handler)
+        return pylogger
+
+    func = Func[PyObject](create_logger_func)
+    provider = PythonLoggerProvider(func)
+    return provider
