@@ -93,7 +93,7 @@ jobs:
           twine check dist/*
 
       - name: Install library, with test extra
-        run: pip install $(echo dist/*)[test]
+        run: pip install .[test]
 
       - name: Unit testing
         run: |
