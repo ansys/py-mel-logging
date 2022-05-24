@@ -30,7 +30,7 @@ jobs:
       - name: Run dotnet build
         run: |
           cd PythonLogging
-          dotnet build
+          dotnet build -c Release
 
       - uses: actions/upload-artifact@v3
         with:
