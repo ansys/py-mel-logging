@@ -43,3 +43,13 @@ test-output.xml
 .\#*
 /.ipynb_checkpoints
 
+# PyCharm generated files
+.idea
+
+# VisualStudio generated files
+/PythonLogging/.vs/
+/PythonLogging/bin/
+/PythonLogging/obj/
+
+# VisualStudio output
+dlls

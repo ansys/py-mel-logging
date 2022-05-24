@@ -11,6 +11,32 @@ on:
       - main
 
 jobs:
+  dotnet-build:
+    name: Build .NET project
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install library
+        run: |
+          pip install poetry
+          poetry install
+
+      - name: Run dotnet build
+        run: |
+          cd PythonLogging
+          dotnet build
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: PythonLogging
+          path: dlls/
+
   style:
     name: Pre-commit Check
     runs-on: ubuntu-latest
@@ -33,10 +59,20 @@ jobs:
 
   main:
     name: Build and Testing
+    needs: [dotnet-build]
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v3
+        with:
+          name: PythonLogging
+          path: dlls/
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: dlls
+
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -63,16 +99,26 @@ jobs:
       - name: Upload wheel
         uses: actions/upload-artifact@v2
         with:
-          name: ansys-product-library-wheel
+          name: py-mel-logging-wheel
           path: dist/
           retention-days: 7
 
   docs:
     name: Build Documentation
+    needs: [dotnet-build]
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v3
+        with:
+          name: PythonLogging
+          path: dlls/
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: dlls
+
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -109,7 +155,7 @@ jobs:
 
   Release:
     if: contains(github.ref, 'refs/tags')
-    needs: [main, style, docs]
+    needs: [dotnet-build, main, style, docs]
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python
@@ -121,7 +167,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: ansys-product-library-wheel
+          name: py-mel-logging-wheel
 
       - uses: actions/download-artifact@v2
         with:

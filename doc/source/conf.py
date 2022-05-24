@@ -1,11 +1,16 @@
 """Sphinx documentation configuration file."""
+import os
+import sys
 from datetime import datetime
 
-from ansys.product.library import __version__
+sys.path.append(os.path.abspath(os.getcwd() + r"/../../dlls/netstandard2.0"))
+
+from py_mel_logging import __version__
 from pyansys_sphinx_theme import pyansys_logo_black
 
+
 # Project information
-project = "ansys-product-library"
+project = "py-mel-logging"
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "Ansys Inc."
 release = version = __version__
