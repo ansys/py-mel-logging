@@ -30,7 +30,7 @@ jobs:
       - name: Run dotnet build
         run: |
           cd PythonLogging
-          dotnet build
+          dotnet build -c Release
 
       - uses: actions/upload-artifact@v3
         with:
@@ -60,7 +60,11 @@ jobs:
   main:
     name: Build and Testing
     needs: [dotnet-build]
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python-version: ['3.8', '3.9', '3.10']
 
     steps:
       - uses: actions/checkout@v2
@@ -89,7 +93,7 @@ jobs:
           twine check dist/*
 
       - name: Install library, with test extra
-        run: pip install $(echo dist/*)[test]
+        run: pip install .[test]
 
       - name: Unit testing
         run: |
