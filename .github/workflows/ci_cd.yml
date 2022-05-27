@@ -57,8 +57,41 @@ jobs:
         run: |
           poetry run pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
 
-  main:
-    name: Build and Testing
+  build:
+    name: Build
+    needs: [dotnet-build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: PythonLogging
+          path: dlls/
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: dlls
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Create wheel
+        run: |
+          pip install build
+          python -m build --wheel
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v2
+        with:
+          name: py-mel-logging-wheel
+          path: dist/
+          retention-days: 7
+
+  testing:
+    name: Testing
     needs: [dotnet-build]
     runs-on: ${{ matrix.os }}
     strategy:
@@ -99,13 +132,6 @@ jobs:
         run: |
           cd tests  # so we're testing the install, not local
           pytest -vx
-
-      - name: Upload wheel
-        uses: actions/upload-artifact@v2
-        with:
-          name: py-mel-logging-wheel
-          path: dist/
-          retention-days: 7
 
   docs:
     name: Build Documentation
