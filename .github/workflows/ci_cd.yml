@@ -185,7 +185,7 @@ jobs:
 
   Release:
     if: contains(github.ref, 'refs/tags')
-    needs: [dotnet-build, main, style, docs]
+    needs: [build, testing, style, docs]
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python
