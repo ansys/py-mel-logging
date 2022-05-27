@@ -24,7 +24,10 @@ classifiers = [
 packages = [
     { include = "py_mel_logging", from = "src" },
 ]
-include = ["py.typed"]
+include = [
+    "py.typed",
+    "dlls/netstandard2.0/*.dll"
+]
 
 [tool.poetry.dependencies]
 python = ">=3.8"
