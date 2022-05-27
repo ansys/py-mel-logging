@@ -92,7 +92,7 @@ jobs:
 
   testing:
     name: Testing
-    needs: [dotnet-build]
+    needs: [build]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -108,7 +108,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Download wheel
-        uses: action/download-artifact@v3
+        uses: actions/download-artifact@v3
         with:
           name: py-mel-logging-wheel
 
