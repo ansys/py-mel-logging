@@ -80,14 +80,13 @@ jobs:
 
       - name: Create wheel
         run: |
-          pip install build
-          python -m build --wheel
+          poetry build -f wheel -vvv
 
       - name: Upload wheel
         uses: actions/upload-artifact@v2
         with:
           name: py-mel-logging-wheel
-          path: dist/
+          path: dist/py_mel_logging-0.1.dev0-py3-none-any.whl
           retention-days: 7
 
   testing:
