@@ -80,6 +80,7 @@ jobs:
 
       - name: Create wheel
         run: |
+          pip install poetry
           poetry build -f wheel -vvv
 
       - name: Upload wheel
