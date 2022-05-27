@@ -112,6 +112,9 @@ jobs:
         with:
           name: py-mel-logging-wheel
 
+      - name: Install Wheel
+        run: pip install py_mel_logging-0.1.dev0-py3-none-any.whl
+
       - name: Display structure
         run: ls -R
 
