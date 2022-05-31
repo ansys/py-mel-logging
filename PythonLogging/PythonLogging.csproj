@@ -8,20 +8,20 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>../dlls/</OutputPath>
+    <OutputPath>../src/py_mel_logging/dlls</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <DocumentationFile>../dlls/PythonLogging.xml</DocumentationFile>
+    <DocumentationFile>../src/py_mel_logging/dlls/PythonLogging.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <WarningLevel>5</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>../dlls/</OutputPath>
+    <OutputPath>../src/py_mel_logging/dlls</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <DocumentationFile>../dlls/PythonLogging.xml</DocumentationFile>
+    <DocumentationFile>../src/py_mel_logging/dlls/PythonLogging.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <WarningLevel>5</WarningLevel>
