@@ -35,7 +35,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: PythonLogging
-          path: dlls/
+          path: src/py_mel_logging/dlls
 
   style:
     name: Pre-commit Check
@@ -67,11 +67,11 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: PythonLogging
-          path: dlls/
+          path: src/py_mel_logging/dlls
 
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: dlls
+        working-directory: src/py_mel_logging/dlls
 
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -114,9 +114,6 @@ jobs:
 
       - name: Install Wheel
         run: pip install py_mel_logging-0.1.dev0-py3-none-any.whl
-
-      - name: Display structure
-        run: ls -R
 
       - name: Install library, with test extra
         run: pip install .[test]
