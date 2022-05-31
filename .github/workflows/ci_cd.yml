@@ -17,15 +17,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
+      # - name: Setup Python
+        # uses: actions/setup-python@v2
+        # with:
+          # python-version: 3.8
 
-      - name: Install library
-        run: |
-          pip install poetry
-          poetry install
+      # - name: Install library
+        # run: |
+          # pip install poetry
+          # poetry install
 
       - name: Run dotnet build
         run: |
