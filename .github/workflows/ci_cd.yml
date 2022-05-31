@@ -109,6 +109,43 @@ jobs:
       - name: Install library, with test extra
         run: pip install .[test]
 
+      - name: Report Env
+        run: |
+          echo "PATH: $PATH"
+          echo "PYTHONASYNCIODEBUG:            $PYTHONASYNCIODEBUG"
+          echo "PYTHONBREAKPOINT:              $PYTHONBREAKPOINT"
+          echo "PYTHONCASEOK:                  $PYTHONCASEOK"
+          echo "PYTHONCOERCECLOCALE:           $PYTHONCOERCECLOCALE"
+          echo "PYTHONDEBUG:                   $PYTHONDEBUG"
+          echo "PYTHONDEVMODE:                 $PYTHONDEVMODE"
+          echo "PYTHONDONTWRITEBYTECODE:       $PYTHONDONTWRITEBYTECODE"
+          echo "PYTHONDUMPREFS:                $PYTHONDUMPREFS"
+          echo "PYTHONEXECUTABLE:              $PYTHONEXECUTABLE"
+          echo "PYTHONFAULTHANDLER:            $PYTHONFAULTHANDLER"
+          echo "PYTHONHASHSEED:                $PYTHONHASHSEED"
+          echo "PYTHONHOME:                    $PYTHONHOME"
+          echo "PYTHONINSPECT:                 $PYTHONINSPECT"
+          echo "PYTHONIOENCODING:              $PYTHONIOENCODING"
+          echo "PYTHONLEGACYWINDOWSFSENCODING: $PYTHONLEGACYWINDOWSFSENCODING"
+          echo "PYTHONLEGACYWINDOWSSTDIO:      $PYTHONLEGACYWINDOWSSTDIO"
+          echo "PYTHONMALLOC:                  $PYTHONMALLOC"
+          echo "PYTHONMALLOCSTATS:             $PYTHONMALLOCSTATS"
+          echo "PYTHONNOUSERSITE:              $PYTHONNOUSERSITE"
+          echo "PYTHONOPTIMIZE:                $PYTHONOPTIMIZE"
+          echo "PYTHONPATH:                    $PYTHONPATH"
+          echo "PYTHONPLATLIBDIR:              $PYTHONPLATLIBDIR"
+          echo "PYTHONPROFILEIMPORTTIME:       $PYTHONPROFILEIMPORTTIME"
+          echo "PYTHONPYCACHEPREFIX:           $PYTHONPYCACHEPREFIX"
+          echo "PYTHONSTARTUP:                 $PYTHONSTARTUP"
+          echo "PYTHONTHREADDEBUG:             $PYTHONTHREADDEBUG"
+          echo "PYTHONTRACEMALLOC:             $PYTHONTRACEMALLOC"
+          echo "PYTHONUNBUFFERED:              $PYTHONUNBUFFERED"
+          echo "PYTHONUSERBASE:                $PYTHONUSERBASE"
+          echo "PYTHONUTF8:                    $PYTHONUTF8"
+          echo "PYTHONVERBOSE:                 $PYTHONVERBOSE"
+          echo "PYTHONWARNDEFAULTENCODING:     $PYTHONWARNDEFAULTENCODING"
+          echo "PYTHONWARNINGS:                $PYTHONWARNINGS"
+
       - name: Unit testing
         run: |
           cd tests  # so we're testing the install, not local
