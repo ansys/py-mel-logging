@@ -9,7 +9,7 @@ __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
 
 def __import_python_logging() -> None:
-    import clr
+    import clr  # type: ignore
     import os
     import sys
 

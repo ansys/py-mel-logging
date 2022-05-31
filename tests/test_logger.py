@@ -2,14 +2,14 @@
 import logging
 import os
 from io import StringIO
-from py_mel_logging import PythonLogger
-from Python.Logging import DotNetPythonLogger
 
 from clr_loader import get_coreclr
-test_path = os.getcwd()
-rt = get_coreclr(test_path + r"/../config.json")
+from py_mel_logging import PythonLogger
+from Python.Logging import DotNetPythonLogger
 from pythonnet import set_runtime
 
+test_path = os.getcwd()
+rt = get_coreclr(test_path + r"/../config.json")
 set_runtime(rt)
 import clr
 

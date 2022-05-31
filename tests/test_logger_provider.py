@@ -2,14 +2,15 @@
 import logging
 import os
 from io import StringIO
-from py_mel_logging import create_logger_provider
 
 from clr_loader import get_coreclr
+from py_mel_logging import create_logger_provider
 from pythonnet import set_runtime
 
 test_path = os.getcwd()
 rt = get_coreclr(test_path + r"/../config.json")
 set_runtime(rt)
+
 import clr
 
 clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
