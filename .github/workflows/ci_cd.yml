@@ -149,8 +149,7 @@ jobs:
           echo "PYTHONVERBOSE:                 $env:PYTHONVERBOSE"
           echo "PYTHONWARNDEFAULTENCODING:     $env:PYTHONWARNDEFAULTENCODING"
           echo "PYTHONWARNINGS:                $env:PYTHONWARNINGS"
-          ls -R /opt/hostedtoolcache/Python/3.8.12/x64
-
+          ls -R $env:pythonLocation
       - name: Unit testing
         run: |
           cd tests  # so we're testing the install, not local
