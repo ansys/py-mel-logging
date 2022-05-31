@@ -26,7 +26,7 @@ packages = [
 ]
 include = [
     "py.typed",
-    "dlls/netstandard2.0/*.dll"
+    "src/py_mel_logging/dlls/**"
 ]
 
 [tool.poetry.dependencies]
