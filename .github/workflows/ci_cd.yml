@@ -87,7 +87,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
+        # os: [windows-latest, ubuntu-latest]
+        os: [windows-latest]
         python-version: ['3.8', '3.9', '3.10']
 
     steps:
@@ -111,40 +112,44 @@ jobs:
 
       - name: Report Env
         run: |
-          echo "PATH: $PATH"
-          echo "PYTHONASYNCIODEBUG:            $PYTHONASYNCIODEBUG"
-          echo "PYTHONBREAKPOINT:              $PYTHONBREAKPOINT"
-          echo "PYTHONCASEOK:                  $PYTHONCASEOK"
-          echo "PYTHONCOERCECLOCALE:           $PYTHONCOERCECLOCALE"
-          echo "PYTHONDEBUG:                   $PYTHONDEBUG"
-          echo "PYTHONDEVMODE:                 $PYTHONDEVMODE"
-          echo "PYTHONDONTWRITEBYTECODE:       $PYTHONDONTWRITEBYTECODE"
-          echo "PYTHONDUMPREFS:                $PYTHONDUMPREFS"
-          echo "PYTHONEXECUTABLE:              $PYTHONEXECUTABLE"
-          echo "PYTHONFAULTHANDLER:            $PYTHONFAULTHANDLER"
-          echo "PYTHONHASHSEED:                $PYTHONHASHSEED"
-          echo "PYTHONHOME:                    $PYTHONHOME"
-          echo "PYTHONINSPECT:                 $PYTHONINSPECT"
-          echo "PYTHONIOENCODING:              $PYTHONIOENCODING"
-          echo "PYTHONLEGACYWINDOWSFSENCODING: $PYTHONLEGACYWINDOWSFSENCODING"
-          echo "PYTHONLEGACYWINDOWSSTDIO:      $PYTHONLEGACYWINDOWSSTDIO"
-          echo "PYTHONMALLOC:                  $PYTHONMALLOC"
-          echo "PYTHONMALLOCSTATS:             $PYTHONMALLOCSTATS"
-          echo "PYTHONNOUSERSITE:              $PYTHONNOUSERSITE"
-          echo "PYTHONOPTIMIZE:                $PYTHONOPTIMIZE"
-          echo "PYTHONPATH:                    $PYTHONPATH"
-          echo "PYTHONPLATLIBDIR:              $PYTHONPLATLIBDIR"
-          echo "PYTHONPROFILEIMPORTTIME:       $PYTHONPROFILEIMPORTTIME"
-          echo "PYTHONPYCACHEPREFIX:           $PYTHONPYCACHEPREFIX"
-          echo "PYTHONSTARTUP:                 $PYTHONSTARTUP"
-          echo "PYTHONTHREADDEBUG:             $PYTHONTHREADDEBUG"
-          echo "PYTHONTRACEMALLOC:             $PYTHONTRACEMALLOC"
-          echo "PYTHONUNBUFFERED:              $PYTHONUNBUFFERED"
-          echo "PYTHONUSERBASE:                $PYTHONUSERBASE"
-          echo "PYTHONUTF8:                    $PYTHONUTF8"
-          echo "PYTHONVERBOSE:                 $PYTHONVERBOSE"
-          echo "PYTHONWARNDEFAULTENCODING:     $PYTHONWARNDEFAULTENCODING"
-          echo "PYTHONWARNINGS:                $PYTHONWARNINGS"
+          echo "PATH:"
+          echo "$env:PATH"
+          echo "pythonLocation:                $env:pythonLocation"
+          echo "LD_LIBRARY_PATH:               $env:LD_LIBRARY_PATH"
+          echo "PYTHONASYNCIODEBUG:            $env:PYTHONASYNCIODEBUG"
+          echo "PYTHONBREAKPOINT:              $env:PYTHONBREAKPOINT"
+          echo "PYTHONCASEOK:                  $env:PYTHONCASEOK"
+          echo "PYTHONCOERCECLOCALE:           $env:PYTHONCOERCECLOCALE"
+          echo "PYTHONDEBUG:                   $env:PYTHONDEBUG"
+          echo "PYTHONDEVMODE:                 $env:PYTHONDEVMODE"
+          echo "PYTHONDONTWRITEBYTECODE:       $env:PYTHONDONTWRITEBYTECODE"
+          echo "PYTHONDUMPREFS:                $env:PYTHONDUMPREFS"
+          echo "PYTHONEXECUTABLE:              $env:PYTHONEXECUTABLE"
+          echo "PYTHONFAULTHANDLER:            $env:PYTHONFAULTHANDLER"
+          echo "PYTHONHASHSEED:                $env:PYTHONHASHSEED"
+          echo "PYTHONHOME:                    $env:PYTHONHOME"
+          echo "PYTHONINSPECT:                 $env:PYTHONINSPECT"
+          echo "PYTHONIOENCODING:              $env:PYTHONIOENCODING"
+          echo "PYTHONLEGACYWINDOWSFSENCODING: $env:PYTHONLEGACYWINDOWSFSENCODING"
+          echo "PYTHONLEGACYWINDOWSSTDIO:      $env:PYTHONLEGACYWINDOWSSTDIO"
+          echo "PYTHONMALLOC:                  $env:PYTHONMALLOC"
+          echo "PYTHONMALLOCSTATS:             $env:PYTHONMALLOCSTATS"
+          echo "PYTHONNOUSERSITE:              $env:PYTHONNOUSERSITE"
+          echo "PYTHONOPTIMIZE:                $env:PYTHONOPTIMIZE"
+          echo "PYTHONPATH:                    $env:PYTHONPATH"
+          echo "PYTHONPLATLIBDIR:              $env:PYTHONPLATLIBDIR"
+          echo "PYTHONPROFILEIMPORTTIME:       $env:PYTHONPROFILEIMPORTTIME"
+          echo "PYTHONPYCACHEPREFIX:           $env:PYTHONPYCACHEPREFIX"
+          echo "PYTHONSTARTUP:                 $env:PYTHONSTARTUP"
+          echo "PYTHONTHREADDEBUG:             $env:PYTHONTHREADDEBUG"
+          echo "PYTHONTRACEMALLOC:             $env:PYTHONTRACEMALLOC"
+          echo "PYTHONUNBUFFERED:              $env:PYTHONUNBUFFERED"
+          echo "PYTHONUSERBASE:                $env:PYTHONUSERBASE"
+          echo "PYTHONUTF8:                    $env:PYTHONUTF8"
+          echo "PYTHONVERBOSE:                 $env:PYTHONVERBOSE"
+          echo "PYTHONWARNDEFAULTENCODING:     $env:PYTHONWARNDEFAULTENCODING"
+          echo "PYTHONWARNINGS:                $env:PYTHONWARNINGS"
+          ls -R /opt/hostedtoolcache/Python/3.8.12/x64
 
       - name: Unit testing
         run: |
