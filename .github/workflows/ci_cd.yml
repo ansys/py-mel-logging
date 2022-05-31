@@ -104,52 +104,12 @@ jobs:
         with:
           name: py-mel-logging-wheel
 
-      - name: Install Wheel
-        run: pip install py_mel_logging-0.1.dev0-py3-none-any.whl
-
       - name: Install library, with test extra
         run: pip install .[test]
 
-      - name: Report Env
-        run: |
-          echo "PATH:"
-          echo "$env:PATH"
-          echo "pythonLocation:                $env:pythonLocation"
-          echo "LD_LIBRARY_PATH:               $env:LD_LIBRARY_PATH"
-          echo "PYTHONASYNCIODEBUG:            $env:PYTHONASYNCIODEBUG"
-          echo "PYTHONBREAKPOINT:              $env:PYTHONBREAKPOINT"
-          echo "PYTHONCASEOK:                  $env:PYTHONCASEOK"
-          echo "PYTHONCOERCECLOCALE:           $env:PYTHONCOERCECLOCALE"
-          echo "PYTHONDEBUG:                   $env:PYTHONDEBUG"
-          echo "PYTHONDEVMODE:                 $env:PYTHONDEVMODE"
-          echo "PYTHONDONTWRITEBYTECODE:       $env:PYTHONDONTWRITEBYTECODE"
-          echo "PYTHONDUMPREFS:                $env:PYTHONDUMPREFS"
-          echo "PYTHONEXECUTABLE:              $env:PYTHONEXECUTABLE"
-          echo "PYTHONFAULTHANDLER:            $env:PYTHONFAULTHANDLER"
-          echo "PYTHONHASHSEED:                $env:PYTHONHASHSEED"
-          echo "PYTHONHOME:                    $env:PYTHONHOME"
-          echo "PYTHONINSPECT:                 $env:PYTHONINSPECT"
-          echo "PYTHONIOENCODING:              $env:PYTHONIOENCODING"
-          echo "PYTHONLEGACYWINDOWSFSENCODING: $env:PYTHONLEGACYWINDOWSFSENCODING"
-          echo "PYTHONLEGACYWINDOWSSTDIO:      $env:PYTHONLEGACYWINDOWSSTDIO"
-          echo "PYTHONMALLOC:                  $env:PYTHONMALLOC"
-          echo "PYTHONMALLOCSTATS:             $env:PYTHONMALLOCSTATS"
-          echo "PYTHONNOUSERSITE:              $env:PYTHONNOUSERSITE"
-          echo "PYTHONOPTIMIZE:                $env:PYTHONOPTIMIZE"
-          echo "PYTHONPATH:                    $env:PYTHONPATH"
-          echo "PYTHONPLATLIBDIR:              $env:PYTHONPLATLIBDIR"
-          echo "PYTHONPROFILEIMPORTTIME:       $env:PYTHONPROFILEIMPORTTIME"
-          echo "PYTHONPYCACHEPREFIX:           $env:PYTHONPYCACHEPREFIX"
-          echo "PYTHONSTARTUP:                 $env:PYTHONSTARTUP"
-          echo "PYTHONTHREADDEBUG:             $env:PYTHONTHREADDEBUG"
-          echo "PYTHONTRACEMALLOC:             $env:PYTHONTRACEMALLOC"
-          echo "PYTHONUNBUFFERED:              $env:PYTHONUNBUFFERED"
-          echo "PYTHONUSERBASE:                $env:PYTHONUSERBASE"
-          echo "PYTHONUTF8:                    $env:PYTHONUTF8"
-          echo "PYTHONVERBOSE:                 $env:PYTHONVERBOSE"
-          echo "PYTHONWARNDEFAULTENCODING:     $env:PYTHONWARNDEFAULTENCODING"
-          echo "PYTHONWARNINGS:                $env:PYTHONWARNINGS"
-          ls -R $env:pythonLocation
+      - name: Install Wheel
+        run: pip install -v py_mel_logging-0.1.dev0-py3-none-any.whl
+
       - name: Unit testing
         run: |
           cd tests  # so we're testing the install, not local
