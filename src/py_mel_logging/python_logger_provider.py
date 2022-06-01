@@ -6,7 +6,8 @@ import clr  # type: ignore
 clr.AddReference("System")
 from System import Func  # type: ignore
 
-clr.AddReference(r"PythonLogging")
+from .load_dotnet_python_logging import load_dotnet_python_logging
+load_dotnet_python_logging()
 from Python.Logging import PythonLoggerProvider  # type: ignore
 
 clr.AddReference(r"Python.Runtime")
