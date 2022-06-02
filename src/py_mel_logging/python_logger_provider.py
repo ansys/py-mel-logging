@@ -24,8 +24,17 @@ def create_logger_provider(log_level: int, log_handler: logging.Handler) -> Pyth
 
     Parameters
     ----------
-    log_level The log level of the logger to create.
-    log_handler The logging handler to use.
+    log_level: int
+        The .Net log level of the logger to create.
+            0 = Trace,
+            1 = Debug,
+            2 = Information,
+            3 = Warning,
+            4 = Error,
+            5 = Critical,
+            6 = None
+    log_handler: logging.Handler
+        The logging handler to use.
 
     Returns
     -------
