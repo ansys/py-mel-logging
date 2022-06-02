@@ -11,31 +11,6 @@ on:
       - main
 
 jobs:
-  dotnet-build:
-    name: Build .NET project
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Install library
-        run: |
-          pip install poetry
-          poetry install
-
-      - name: Run dotnet build
-        run: |
-          cd PythonLogging
-          dotnet build -c Release
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: PythonLogging
-          path: dlls/
 
   style:
     name: Pre-commit Check
@@ -57,25 +32,16 @@ jobs:
         run: |
           poetry run pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
 
-  main:
-    name: Build and Testing
-    needs: [dotnet-build]
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest]
-        python-version: ['3.8', '3.9', '3.10']
-
+  build:
+    name: Build
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v3
-        with:
-          name: PythonLogging
-          path: dlls/
 
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: dlls
+      - name: Run dotnet build
+        run: |
+          cd PythonLogging
+          dotnet build -c Release
 
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -84,32 +50,58 @@ jobs:
 
       - name: Create wheel
         run: |
-          pip install build
-          python -m build --wheel
+          pip install poetry
+          poetry build -f wheel -vvv
 
-      - name: Validate wheel
-        run: |
-          pip install twine
-          twine check dist/*
+      - uses: actions/upload-artifact@v3
+        with:
+          name: PythonLogging
+          path: src/py_mel_logging/dlls
+          retention-days: 7
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v3
+        with:
+          name: py-mel-logging-wheel
+          path: dist/py_mel_logging-0.1.dev0-py3-none-any.whl
+          retention-days: 7
+
+  testing:
+    name: Testing
+    needs: [build]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python-version: ['3.8', '3.9', '3.10']
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Download wheel
+        uses: actions/download-artifact@v3
+        with:
+          name: py-mel-logging-wheel
 
       - name: Install library, with test extra
         run: pip install .[test]
+
+      - name: Install Wheel
+        run: pip install --force-reinstall -v py_mel_logging-0.1.dev0-py3-none-any.whl
 
       - name: Unit testing
         run: |
           cd tests  # so we're testing the install, not local
           pytest -vx
 
-      - name: Upload wheel
-        uses: actions/upload-artifact@v2
-        with:
-          name: py-mel-logging-wheel
-          path: dist/
-          retention-days: 7
-
   docs:
     name: Build Documentation
-    needs: [dotnet-build]
+    needs: [build]
     runs-on: ubuntu-latest
 
     steps:
@@ -159,7 +151,7 @@ jobs:
 
   Release:
     if: contains(github.ref, 'refs/tags')
-    needs: [dotnet-build, main, style, docs]
+    needs: [build, testing, style, docs]
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python

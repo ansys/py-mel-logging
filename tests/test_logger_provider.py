@@ -1,27 +1,20 @@
 """Tests for create_logger_provider."""
 import logging
 import os
-import sys
 from io import StringIO
 
-sys.path.append(os.path.abspath(os.getcwd() + r"/../dlls/netstandard2.0"))
-
 from clr_loader import get_coreclr
+from py_mel_logging import create_logger_provider
+from pythonnet import set_runtime
 
 test_path = os.getcwd()
 rt = get_coreclr(test_path + r"/../config.json")
-from pythonnet import set_runtime
-
 set_runtime(rt)
-import clr
 
-clr.AddReference(r"PythonLogging")
-from Python.Logging import DotNetPythonLogger, PythonLoggerProvider
+import clr
 
 clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
 from Microsoft.Extensions.Logging import EventId, LogLevel
-
-from py_mel_logging import create_logger_provider
 
 
 def test_create_logger_provider():

@@ -1,31 +1,24 @@
 """Tests for PythonLogger."""
 import logging
 import os
-import sys
 from io import StringIO
 
-sys.path.append(os.path.abspath(os.getcwd() + r"/../dlls/netstandard2.0"))
-
 from clr_loader import get_coreclr
+from py_mel_logging import PythonLogger
+from Python.Logging import DotNetPythonLogger
+from pythonnet import set_runtime
 
 test_path = os.getcwd()
 rt = get_coreclr(test_path + r"/../config.json")
-from pythonnet import set_runtime
-
 set_runtime(rt)
 import clr
 
 clr.AddReference("System")
+clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
+
 from System import Exception as DotNetException
 from System import Func, String
-
-clr.AddReference(r"PythonLogging")
-from Python.Logging import DotNetPythonLogger
-
-clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
 from Microsoft.Extensions.Logging import EventId, LogLevel
-
-from py_mel_logging import PythonLogger
 
 
 def test_is_enabled_returns_false_for_disabled_level():
