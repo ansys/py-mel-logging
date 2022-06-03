@@ -102,4 +102,4 @@ def test_log_with_formatter():
 
     # Verification
     handler.flush()
-    assert result.getvalue() == "☯[0] : Eyy - bruh\n"
+    assert result.getvalue() == "[0] : ☯Eyy - bruh\n"
