@@ -1,6 +1,7 @@
 """Implementation of PythonLogger."""
 import logging
 from string import Template
+from typing import Any
 from typing import TypeVar
 
 import clr  # type: ignore
@@ -92,22 +93,29 @@ class PythonLogger:
         """
 
         # Comes from PythonLogger.Log() in C# project
-        log_level = args[0]
-        event_id = args[1]
-        state = args[2]
-        exception = args[3]
-        formatter = args[4]
+        log_level: LogLevel = args[0]
+        event_id: EventId = args[1]
+        state: Any = args[2]
+        exception: DotNetException = args[3]
+        formatter: Func[Any, DotNetException, str] = args[4]
 
         if not self.is_enabled(log_level):
             return
 
-        args = {"id": event_id.Id, "state": state}
-        message: str = Template("[${id}] : ${state}").safe_substitute(args)
-
+        message: str = ""
         if formatter is not None:
             message = formatter(state, exception)
-        elif exception is not None:
-            message += "\n" + i18n("Literals", "EXCEPTION_STR") + ": " + exception.Message
+        else:
+            if state is not None:
+                message = str(state)
+            if exception is not None:
+                if message != "":
+                    message += "\n"
+                message += i18n("Literals", "EXCEPTION_STR") + ": " + exception.Message
+
+        if id is not None:
+            msg_args = {"id": event_id.Id, "message": message}
+            message = Template("[${id}] : ${message}").safe_substitute(msg_args)
 
         python_level: int = self._get_python_level(log_level)
         self._logger.log(python_level, message)
