@@ -60,7 +60,7 @@ namespace Python.Logging
             {
                logLevel.ToPython(),
                eventId.ToPython(),
-               state.ToString().ToPython(),
+               state.ToPython(),
                exception.ToPython(),
                formatter.ToPython()
             };
