@@ -15,7 +15,6 @@ import clr
 
 clr.AddReference("System")
 clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
-clr.AddReference("Microsoft.Extensions.Logging")
 
 from System import Exception as DotNetException
 from System import Func, String
