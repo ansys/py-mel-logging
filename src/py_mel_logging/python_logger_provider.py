@@ -24,8 +24,10 @@ def create_logger_provider(log_level: int, log_handler: logging.Handler) -> Pyth
 
     Parameters
     ----------
-    log_level The log level of the logger to create.
-    log_handler The logging handler to use.
+    log_level: int
+        Python log level to log messages at.
+    log_handler: logging.Handler
+        The logging handler to use.
 
     Returns
     -------
