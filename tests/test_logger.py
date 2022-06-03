@@ -15,10 +15,13 @@ import clr
 
 clr.AddReference("System")
 clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
+clr.AddReference("Microsoft.Extensions.Logging")
 
+import System
 from System import Exception as DotNetException
 from System import Func, String
 from Microsoft.Extensions.Logging import EventId, LogLevel
+import Microsoft.Extensions.Logging as msLogging
 
 
 def test_is_enabled_returns_false_for_disabled_level():

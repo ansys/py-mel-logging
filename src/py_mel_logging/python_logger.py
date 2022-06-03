@@ -68,14 +68,7 @@ class PythonLogger:
         result: bool = self._logger.isEnabledFor(python_level)
         return result
 
-    def log(
-        self,
-        log_level: LogLevel,
-        event_id: EventId,
-        state: TState,
-        exception: DotNetException,
-        formatter: Func,
-    ) -> None:
+    def log(self, *args) -> None:
         """
         Write a log entry.
 
@@ -97,6 +90,14 @@ class PythonLogger:
         -------
         None.
         """
+
+        # Comes from PythonLogger.Log() in C# project
+        log_level = args[0]
+        event_id = args[1]
+        state = args[2]
+        exception = args[3]
+        formatter = args[4]
+
         if not self.is_enabled(log_level):
             return
 
@@ -104,7 +105,7 @@ class PythonLogger:
         message: str = Template("[${id}] : ${state}").safe_substitute(args)
 
         if formatter is not None:
-            message = formatter(message, exception)
+            message = formatter(state, exception)
         elif exception is not None:
             message += "\n" + i18n("Literals", "EXCEPTION_STR") + ": " + exception.Message
 
