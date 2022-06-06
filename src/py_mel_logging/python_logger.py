@@ -2,6 +2,7 @@
 import logging
 from string import Template
 from typing import Any
+from typing import Callable
 from typing import TypeVar
 
 import clr  # type: ignore
@@ -9,9 +10,9 @@ import clr  # type: ignore
 from .i18n import i18n
 
 clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
-from Microsoft.Extensions.Logging import EventId, LogLevel  # type: ignore
-from System import Exception as DotNetException  # type: ignore
-from System import Func, IDisposable  # type: ignore
+from Microsoft.Extensions.Logging import EventId    # type: ignore
+from Microsoft.Extensions.Logging import LogLevel   # type: ignore
+from System import IDisposable                      # type: ignore
 
 TState = TypeVar("TState")
 
@@ -69,7 +70,14 @@ class PythonLogger:
         result: bool = self._logger.isEnabledFor(python_level)
         return result
 
-    def log(self, *args) -> None:
+    def log(
+            self,
+            log_level: LogLevel,
+            event_id: EventId,
+            state: TState,
+            exception: Exception,
+            formatter: Callable[[TState, Exception], str]
+    ) -> None:
         """
         Write a log entry.
 
@@ -81,23 +89,12 @@ class PythonLogger:
                   Id of the event.
         state: TState
                The entry to be written. Can be also an object.
-        exception: DotNetException
+        exception: Exception
                    The exception related to this entry.
-        formatter: Func[TState, DotNetException, String]
+        formatter: Callable[[TState, Exception], str]
                    Function to create a String message of the state and
                    exception.
-
-        Returns
-        -------
-        None.
         """
-
-        # Comes from PythonLogger.Log() in C# project
-        log_level: LogLevel = args[0]
-        event_id: EventId = args[1]
-        state: Any = args[2]
-        exception: DotNetException = args[3]
-        formatter: Func[Any, DotNetException, str] = args[4]
 
         if not self.is_enabled(log_level):
             return
