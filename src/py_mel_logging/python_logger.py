@@ -15,8 +15,6 @@ clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
 
 from Microsoft.Extensions.Logging import EventId  # type: ignore
 from Microsoft.Extensions.Logging import LogLevel  # type: ignore
-from System import Exception as DotNetException  # type: ignore
-from System import Func  # type: ignore
 from System import IDisposable  # type: ignore
 
 TState = TypeVar("TState")
