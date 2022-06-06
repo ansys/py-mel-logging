@@ -1,5 +1,7 @@
 """Implementation of PythonLogger."""
 import logging
+import os
+import sys
 from string import Template
 from typing import TypeVar
 
@@ -7,7 +9,9 @@ import clr  # type: ignore
 
 from .i18n import i18n
 
+sys.path.append(os.path.join(os.path.dirname(__file__), "dlls/netstandard2.0"))
 clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
+
 from Microsoft.Extensions.Logging import EventId, LogLevel  # type: ignore
 from System import Exception as DotNetException  # type: ignore
 from System import Func, IDisposable  # type: ignore
