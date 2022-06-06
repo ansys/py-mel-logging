@@ -1,6 +1,7 @@
 """Implementation of PythonLogger."""
 import logging
 from string import Template
+from typing import Callable
 from typing import TypeVar
 
 import clr  # type: ignore
@@ -8,9 +9,9 @@ import clr  # type: ignore
 from .i18n import i18n
 
 clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
-from Microsoft.Extensions.Logging import EventId, LogLevel  # type: ignore
-from System import Exception as DotNetException  # type: ignore
-from System import Func, IDisposable  # type: ignore
+from Microsoft.Extensions.Logging import EventId  # type: ignore
+from Microsoft.Extensions.Logging import LogLevel  # type: ignore
+from System import IDisposable  # type: ignore
 
 TState = TypeVar("TState")
 
@@ -73,8 +74,8 @@ class PythonLogger:
         log_level: LogLevel,
         event_id: EventId,
         state: TState,
-        exception: DotNetException,
-        formatter: Func,
+        exception: Exception,
+        formatter: Callable[[TState, Exception], str],
     ) -> None:
         """
         Write a log entry.
@@ -87,26 +88,30 @@ class PythonLogger:
                   Id of the event.
         state: TState
                The entry to be written. Can be also an object.
-        exception: DotNetException
+        exception: Exception
                    The exception related to this entry.
-        formatter: Func[TState, DotNetException, String]
+        formatter: Callable[[TState, Exception], str]
                    Function to create a String message of the state and
                    exception.
-
-        Returns
-        -------
-        None.
         """
+
         if not self.is_enabled(log_level):
             return
 
-        args = {"id": event_id.Id, "state": state}
-        message: str = Template("[${id}] : ${state}").safe_substitute(args)
-
+        message: str = ""
         if formatter is not None:
-            message = formatter(message, exception)
-        elif exception is not None:
-            message += "\n" + i18n("Literals", "EXCEPTION_STR") + ": " + exception.Message
+            message = formatter(state, exception)
+        else:
+            if state is not None:
+                message = str(state)
+            if exception is not None:
+                if message != "":
+                    message += "\n"
+                message += i18n("Literals", "EXCEPTION_STR") + ": " + exception.Message
+
+        if id is not None:
+            msg_args = {"id": event_id.Id, "message": message}
+            message = Template("[${id}] : ${message}").safe_substitute(msg_args)
 
         python_level: int = self._get_python_level(log_level)
         self._logger.log(python_level, message)
