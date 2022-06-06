@@ -1,7 +1,6 @@
 """Implementation of PythonLogger."""
 import logging
 from string import Template
-from typing import Any
 from typing import Callable
 from typing import TypeVar
 
@@ -10,9 +9,9 @@ import clr  # type: ignore
 from .i18n import i18n
 
 clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
-from Microsoft.Extensions.Logging import EventId    # type: ignore
-from Microsoft.Extensions.Logging import LogLevel   # type: ignore
-from System import IDisposable                      # type: ignore
+from Microsoft.Extensions.Logging import EventId  # type: ignore
+from Microsoft.Extensions.Logging import LogLevel  # type: ignore
+from System import IDisposable  # type: ignore
 
 TState = TypeVar("TState")
 
@@ -71,12 +70,12 @@ class PythonLogger:
         return result
 
     def log(
-            self,
-            log_level: LogLevel,
-            event_id: EventId,
-            state: TState,
-            exception: Exception,
-            formatter: Callable[[TState, Exception], str]
+        self,
+        log_level: LogLevel,
+        event_id: EventId,
+        state: TState,
+        exception: Exception,
+        formatter: Callable[[TState, Exception], str],
     ) -> None:
         """
         Write a log entry.

@@ -4,7 +4,6 @@ import os
 from io import StringIO
 
 import pytest
-
 from clr_loader import get_coreclr
 from py_mel_logging import create_logger_provider
 from pythonnet import set_runtime
@@ -58,7 +57,6 @@ def test_create_logger_provider():
         pytest.param(logging.INFO, logging.INFO, LogLevel.Trace, False),
         pytest.param(logging.DEBUG, logging.DEBUG, LogLevel.Trace, False),
         pytest.param(logging.DEBUG - 1, logging.DEBUG - 1, LogLevel.Trace, True),
-
         # handler or provider level can filter
         pytest.param(logging.CRITICAL + 1, logging.CRITICAL, LogLevel.Critical, False),
         pytest.param(logging.CRITICAL, logging.CRITICAL + 1, LogLevel.Critical, False),
@@ -72,10 +70,10 @@ def test_create_logger_provider():
         pytest.param(logging.DEBUG, logging.INFO, LogLevel.Debug, False),
         pytest.param(logging.DEBUG, logging.DEBUG - 1, LogLevel.Trace, False),
         pytest.param(logging.DEBUG - 1, logging.DEBUG, LogLevel.Trace, False),
-    ]
+    ],
 )
 def test_level_v_level(
-        handler_level: int, provider_level: int, dotnet_log_level: LogLevel, expect_message: bool
+    handler_level: int, provider_level: int, dotnet_log_level: LogLevel, expect_message: bool
 ):
     """
     Test the levels properly filter or pass the different log messages.
