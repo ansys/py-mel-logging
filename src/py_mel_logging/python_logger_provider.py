@@ -1,20 +1,21 @@
 """Implementation of PythonLoggerProvider."""
 import logging
+import os
+import sys
 
 import clr  # type: ignore
+
+from .python_logger import PythonLogger
 
 clr.AddReference("System")
 from System import Func  # type: ignore
 
-from .load_dotnet_python_logging import load_dotnet_python_logging
-
-load_dotnet_python_logging()
+sys.path.append(os.path.join(os.path.dirname(__file__), "dlls/netstandard2.0"))
+clr.AddReference(r"PythonLogging")
 from Python.Logging import PythonLoggerProvider  # type: ignore
 
 clr.AddReference(r"Python.Runtime")
 from Python.Runtime import PyObject  # type: ignore
-
-from .python_logger import PythonLogger
 
 
 def create_logger_provider(log_level: int, log_handler: logging.Handler) -> PythonLoggerProvider:
