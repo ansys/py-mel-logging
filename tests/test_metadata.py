@@ -3,7 +3,7 @@ from System.Runtime.InteropServices import RuntimeInformation
 
 
 def test_pkg_version():
-    assert __version__ == "0.1.dev0"
+    assert __version__ == "0.1.dev1"
 
 
 def test_framework_description():
