@@ -14,8 +14,14 @@ set_runtime(rt)
 
 import clr
 
-clr.AddReference(r"Microsoft.Extensions.Logging.Abstractions")
-from Microsoft.Extensions.Logging import EventId, LogLevel
+clr.AddReference("Microsoft.Extensions.DependencyInjection")
+clr.AddReference("Microsoft.Extensions.Logging")
+clr.AddReference("Microsoft.Extensions.Logging.Abstractions")
+clr.AddReference("Python.Runtime")
+import Microsoft.Extensions.DependencyInjection as DependencyInjection  # type: ignore
+from Microsoft.Extensions.Logging import EventId, LogLevel, ILogger
+from System import Object
+from Python.Logging import DotNetPythonLogger, PythonLoggerExtensions
 
 
 def test_create_logger_provider():
@@ -27,6 +33,28 @@ def test_create_logger_provider():
     # SUT
     provider: PythonLoggerProvider = create_logger_provider(logging.WARN, handler)
     logger: DotNetPythonLogger = provider.CreateLogger("loggerName")
+    logger.Log[str](LogLevel.Warning, EventId(0), "Eyy", None, None)
+
+    # Verification
+    handler.flush()
+    assert result.getvalue() == "[0] : Eyy\n"
+
+
+def test_use_in_dotnet():
+    # Setup
+    result = StringIO()
+    handler = logging.StreamHandler(result)
+    handler.setLevel(logging.DEBUG)
+
+    provider: PythonLoggerProvider = create_logger_provider(logging.WARN, handler)
+    sc = DependencyInjection.ServiceCollection()
+    PythonLoggerExtensions.ConfigureServiceCollection(sc, provider)
+    sp = DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(sc)
+
+    # SUT
+    logger = DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[
+        ILogger[Object]
+    ](sp)
     logger.Log[str](LogLevel.Warning, EventId(0), "Eyy", None, None)
 
     # Verification
