@@ -3,7 +3,6 @@ import logging
 import os
 from io import StringIO
 
-import pytest
 from clr_loader import get_coreclr
 from py_mel_logging import create_logger_provider
 from pythonnet import set_runtime
@@ -62,45 +61,132 @@ def test_use_in_dotnet():
     assert result.getvalue() == "[0] : Eyy\n"
 
 
-@pytest.mark.parametrize(
-    "handler_level,provider_level,dotnet_log_level,expect_message",
-    [
-        # handler and provider at same level, equal or more critical pass
-        pytest.param(logging.CRITICAL, logging.CRITICAL, LogLevel.Critical, True),
-        pytest.param(logging.ERROR, logging.ERROR, LogLevel.Critical, True),
-        pytest.param(logging.CRITICAL, logging.CRITICAL, LogLevel.Error, False),
-        pytest.param(logging.ERROR, logging.ERROR, LogLevel.Error, True),
-        pytest.param(logging.WARNING, logging.WARNING, LogLevel.Error, True),
-        pytest.param(logging.CRITICAL, logging.CRITICAL, LogLevel.Warning, False),
-        pytest.param(logging.ERROR, logging.ERROR, LogLevel.Warning, False),
-        pytest.param(logging.WARNING, logging.WARNING, LogLevel.Warning, True),
-        pytest.param(logging.INFO, logging.INFO, LogLevel.Warning, True),
-        pytest.param(logging.ERROR, logging.ERROR, LogLevel.Information, False),
-        pytest.param(logging.WARNING, logging.WARNING, LogLevel.Information, False),
-        pytest.param(logging.INFO, logging.INFO, LogLevel.Information, True),
-        pytest.param(logging.DEBUG, logging.DEBUG, LogLevel.Information, True),
-        pytest.param(logging.WARNING, logging.WARNING, LogLevel.Debug, False),
-        pytest.param(logging.INFO, logging.INFO, LogLevel.Debug, False),
-        pytest.param(logging.DEBUG, logging.DEBUG, LogLevel.Debug, True),
-        pytest.param(logging.INFO, logging.INFO, LogLevel.Trace, False),
-        pytest.param(logging.DEBUG, logging.DEBUG, LogLevel.Trace, False),
-        pytest.param(logging.DEBUG - 1, logging.DEBUG - 1, LogLevel.Trace, True),
-        # handler or provider level can filter
-        pytest.param(logging.CRITICAL + 1, logging.CRITICAL, LogLevel.Critical, False),
-        pytest.param(logging.CRITICAL, logging.CRITICAL + 1, LogLevel.Critical, False),
-        pytest.param(logging.CRITICAL, logging.ERROR, LogLevel.Error, False),
-        pytest.param(logging.ERROR, logging.CRITICAL, LogLevel.Error, False),
-        pytest.param(logging.ERROR, logging.WARNING, LogLevel.Warning, False),
-        pytest.param(logging.WARNING, logging.ERROR, LogLevel.Warning, False),
-        pytest.param(logging.WARNING, logging.INFO, LogLevel.Information, False),
-        pytest.param(logging.INFO, logging.WARNING, LogLevel.Information, False),
-        pytest.param(logging.INFO, logging.DEBUG, LogLevel.Debug, False),
-        pytest.param(logging.DEBUG, logging.INFO, LogLevel.Debug, False),
-        pytest.param(logging.DEBUG, logging.DEBUG - 1, LogLevel.Trace, False),
-        pytest.param(logging.DEBUG - 1, logging.DEBUG, LogLevel.Trace, False),
-    ],
-)
-def test_level_v_level(
+def test_level_v_level_critical_critical_critical():
+    _test_level_v_level(logging.CRITICAL, logging.CRITICAL, LogLevel.Critical, True)
+
+
+def test_level_v_level_error_error_critical():
+    _test_level_v_level(logging.ERROR, logging.ERROR, LogLevel.Critical, True)
+
+
+def test_level_v_level_critical_critical_error():
+    _test_level_v_level(logging.CRITICAL, logging.CRITICAL, LogLevel.Error, False)
+
+
+def test_level_v_level_error_error_error():
+    _test_level_v_level(logging.ERROR, logging.ERROR, LogLevel.Error, True)
+
+
+def test_level_v_level_warning_warning_error():
+    _test_level_v_level(logging.WARNING, logging.WARNING, LogLevel.Error, True)
+
+
+def test_level_v_level_critical_critical_warning():
+    _test_level_v_level(logging.CRITICAL, logging.CRITICAL, LogLevel.Warning, False)
+
+
+def test_level_v_level_error_error_warning():
+    _test_level_v_level(logging.ERROR, logging.ERROR, LogLevel.Warning, False)
+
+
+def test_level_v_level_warning_warning_warning():
+    _test_level_v_level(logging.WARNING, logging.WARNING, LogLevel.Warning, True)
+
+
+def test_level_v_level_info_info_warning():
+    _test_level_v_level(logging.INFO, logging.INFO, LogLevel.Warning, True)
+
+
+def test_level_v_level_error_error_information():
+    _test_level_v_level(logging.ERROR, logging.ERROR, LogLevel.Information, False)
+
+
+def test_level_v_level_warning_warning_information():
+    _test_level_v_level(logging.WARNING, logging.WARNING, LogLevel.Information, False)
+
+
+def test_level_v_level_info_info_information():
+    _test_level_v_level(logging.INFO, logging.INFO, LogLevel.Information, True)
+
+
+def test_level_v_level_debug_debug_information():
+    _test_level_v_level(logging.DEBUG, logging.DEBUG, LogLevel.Information, True)
+
+
+def test_level_v_level_warning_warning_debug():
+    _test_level_v_level(logging.WARNING, logging.WARNING, LogLevel.Debug, False)
+
+
+def test_level_v_level_info_info_debug():
+    _test_level_v_level(logging.INFO, logging.INFO, LogLevel.Debug, False)
+
+
+def test_level_v_level_debug_debug_debug():
+    _test_level_v_level(logging.DEBUG, logging.DEBUG, LogLevel.Debug, True)
+
+
+def test_level_v_level_info_info_trace():
+    _test_level_v_level(logging.INFO, logging.INFO, LogLevel.Trace, False)
+
+
+def test_level_v_level_debug_debug_trace():
+    _test_level_v_level(logging.DEBUG, logging.DEBUG, LogLevel.Trace, False)
+
+
+def test_level_v_level_debug_minus1_debug_minus1_trace():
+    _test_level_v_level(logging.DEBUG - 1, logging.DEBUG - 1, LogLevel.Trace, True)
+
+
+# handler or provider level can filter
+def test_level_v_level_critical_plus1_critical_critical():
+    _test_level_v_level(logging.CRITICAL + 1, logging.CRITICAL, LogLevel.Critical, False)
+
+
+def test_level_v_level_critical_critical_plus1_critical():
+    _test_level_v_level(logging.CRITICAL, logging.CRITICAL + 1, LogLevel.Critical, False)
+
+
+def test_level_v_level_critical_error_error():
+    _test_level_v_level(logging.CRITICAL, logging.ERROR, LogLevel.Error, False)
+
+
+def test_level_v_level_error_critical_error():
+    _test_level_v_level(logging.ERROR, logging.CRITICAL, LogLevel.Error, False)
+
+
+def test_level_v_level_error_warning_warning():
+    _test_level_v_level(logging.ERROR, logging.WARNING, LogLevel.Warning, False)
+
+
+def test_level_v_level_warning_error_warning():
+    _test_level_v_level(logging.WARNING, logging.ERROR, LogLevel.Warning, False)
+
+
+def test_level_v_level_warning_info_information():
+    _test_level_v_level(logging.WARNING, logging.INFO, LogLevel.Information, False)
+
+
+def test_level_v_level_info_warning_information():
+    _test_level_v_level(logging.INFO, logging.WARNING, LogLevel.Information, False)
+
+
+def test_level_v_level_info_debug_debug():
+    _test_level_v_level(logging.INFO, logging.DEBUG, LogLevel.Debug, False)
+
+
+def test_level_v_level_debug_info_debug():
+    _test_level_v_level(logging.DEBUG, logging.INFO, LogLevel.Debug, False)
+
+
+def test_level_v_level_debug_debug_minus1_trace():
+    _test_level_v_level(logging.DEBUG, logging.DEBUG - 1, LogLevel.Trace, False)
+
+
+def test_level_v_level_debug_minus1_debug_trace():
+    _test_level_v_level(logging.DEBUG - 1, logging.DEBUG, LogLevel.Trace, False)
+
+
+def _test_level_v_level(
     handler_level: int, provider_level: int, dotnet_log_level: LogLevel, expect_message: bool
 ):
     """
