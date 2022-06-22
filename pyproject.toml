@@ -31,7 +31,7 @@ include = [
 
 [tool.poetry.dependencies]
 python = ">=3.8"
-pythonnet = "^3.0.0a2"
+pythonnet = {git = "https://github.com/pythonnet/pythonnet.git", rev = "43d1640"}
 
 Sphinx =  {version="^4.4", optional=true}
 numpydoc =  {version="^1.2", optional=true}
