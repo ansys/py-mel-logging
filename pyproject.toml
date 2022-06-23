@@ -31,6 +31,8 @@ include = [
 
 [tool.poetry.dependencies]
 python = ">=3.8"
+# LTTODO: Use next alpha when available.
+# LTTODO: Use official release when available.
 pythonnet = {git = "https://github.com/pythonnet/pythonnet.git", rev = "43d1640"}
 
 Sphinx =  {version="^4.4", optional=true}
