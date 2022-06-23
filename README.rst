@@ -25,6 +25,8 @@ About
 This repository provides a Python module for using a Python logger with
 the Microsoft.Extensions.Logging framework.
 
+PLEASE NOTE: this project is still a work in progress. 
+
 
 Project Overview
 ----------------
