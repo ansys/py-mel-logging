@@ -9,7 +9,7 @@ from Python.Logging import DotNetPythonLogger
 from pythonnet import set_runtime
 
 test_path = os.getcwd()
-rt = get_coreclr(test_path + r"/../config.json")
+rt = get_coreclr(runtime_config=test_path + r"/../config.json")
 set_runtime(rt)
 import clr
 
