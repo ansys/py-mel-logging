@@ -93,7 +93,7 @@ jobs:
         run: pip install .[test]
 
       - name: Install Wheel
-        run: pip install --force-reinstall -v py_mel_logging-0.1.dev1-py3-none-any.whl
+        run: pip install --force-reinstall -v py_mel_logging-0.2.dev1-py3-none-any.whl
 
       - name: Unit testing
         run: |
