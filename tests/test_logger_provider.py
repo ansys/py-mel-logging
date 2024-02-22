@@ -3,14 +3,11 @@ import logging
 import os
 from io import StringIO
 
-from clr_loader import get_coreclr
 from py_mel_logging import create_logger_provider
-from pythonnet import set_runtime
+from pythonnet import load
 
 test_path = os.getcwd()
-rt = get_coreclr(runtime_config=test_path + r"/../config.json")
-set_runtime(rt)
-
+load("coreclr", runtime_config=test_path + r"/../config.json")
 import clr
 
 clr.AddReference("Microsoft.Extensions.DependencyInjection")
