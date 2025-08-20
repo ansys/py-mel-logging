@@ -33,7 +33,7 @@ include = [
 python = "<3.13,>=3.8"
 # LTTODO: Use next alpha when available.
 # LTTODO: Use official release when available.
-pythonnet = ">=3.0.0"
+pythonnet = "=3.0.5"
 
 Sphinx =  {version="^4.4", optional=true}
 numpydoc =  {version="^1.2", optional=true}
