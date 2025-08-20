@@ -53,14 +53,14 @@ jobs:
           pip install poetry
           poetry build -f wheel -vvv
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: PythonLogging
           path: src/py_mel_logging/dlls
           retention-days: 7
 
       - name: Upload wheel
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: py-mel-logging-wheel
           path: dist/py_mel_logging-0.2.dev1-py3-none-any.whl
@@ -137,7 +137,7 @@ jobs:
 #          poetry run make -C doc latexpdf
 
       - name: Upload HTML Documentation
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Documentation-html
           path: doc/build/html
