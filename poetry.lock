@@ -814,14 +814,14 @@ testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtuale
 
 [[package]]
 name = "pythonnet"
-version = "3.0.3"
+version = "3.0.5"
 description = ".NET and Mono integration for Python"
-category = "main"
 optional = false
-python-versions = "<3.13,>=3.7"
+python-versions = "<3.14,>=3.7"
+groups = ["main"]
 files = [
-    {file = "pythonnet-3.0.3-py3-none-any.whl", hash = "sha256:62486f860c7955b7dcf470e085e4d2b599512224ca24193f716e857b496c530f"},
-    {file = "pythonnet-3.0.3.tar.gz", hash = "sha256:8d4b2e97158a023875f8647458a58f38817f4fe39af60abdd6b0d8adf1d77e75"},
+    {file = "pythonnet-3.0.5-py3-none-any.whl", hash = "sha256:f6702d694d5d5b163c9f3f5cc34e0bed8d6857150237fae411fefb883a656d20"},
+    {file = "pythonnet-3.0.5.tar.gz", hash = "sha256:48e43ca463941b3608b32b4e236db92d8d40db4c58a75ace902985f76dac21cf"},
 ]
 
 [package.dependencies]
