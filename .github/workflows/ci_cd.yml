@@ -10,6 +10,12 @@ on:
     branches:
       - main
 
+permissions:
+  # This is required for requesting the OIDC token
+  id-token: write
+  # This is required for actions / checkout
+  contents: read
+
 jobs:
 
   style:
@@ -34,7 +40,11 @@ jobs:
 
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ansys-internal-arc-linux-rss
+    container:
+      image: 'azuekubeacr03.azurecr.io/ansys-container-image-layers/base-images/linux/ubuntu24:latest'
+
+      
     steps:
       - uses: actions/checkout@v2
 
@@ -48,6 +58,16 @@ jobs:
         with:
           python-version: 3.8
 
+      - name: Set up read-only OIDC authentication to Artifactory with JFrog CLI
+        id: setup-oidc-jfrog-cli
+        uses: jfrog/setup-jfrog-cli@v4
+        with:
+          version: latest
+          oidc-provider-name: github-actions-oidc
+          oidc-audience: GitHub ansys-internal CI/CD Pipelines
+        env:
+          JF_URL: https://artifactory.ansys.com
+
       - name: Create wheel
         run: |
           pip install poetry
@@ -60,11 +80,9 @@ jobs:
           retention-days: 7
 
       - name: Upload wheel
-        uses: actions/upload-artifact@v4
-        with:
-          name: py-mel-logging-wheel
-          path: dist/py_mel_logging-0.2.dev1-py3-none-any.whl
-          retention-days: 7
+        run: |
+          cd dist
+          jf rt upload --build-name=github.com/ansys/py-mel-logging --build-number=${{ github.run_number }} py_mel_logging-*.whl mc-modelcenter-pypi-dev
 
   testing:
     name: Testing
