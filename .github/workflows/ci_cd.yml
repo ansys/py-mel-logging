@@ -10,6 +10,12 @@ on:
     branches:
       - main
 
+permissions:
+  # This is required for requesting the OIDC token
+  id-token: write
+  # This is required for actions / checkout
+  contents: read
+
 jobs:
 
   style:
@@ -34,7 +40,7 @@ jobs:
 
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ansys-internal-arc-linux-rss
     steps:
       - uses: actions/checkout@v2
 
