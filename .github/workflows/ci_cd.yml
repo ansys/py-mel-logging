@@ -41,6 +41,10 @@ jobs:
   build:
     name: Build
     runs-on: ansys-internal-arc-linux-rss
+    container:
+      image: 'azuekubeacr03.azurecr.io/ansys-container-image-layers/base-images/linux/ubuntu24:latest'
+
+      
     steps:
       - uses: actions/checkout@v2
 
