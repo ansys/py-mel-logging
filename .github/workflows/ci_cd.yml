@@ -208,13 +208,15 @@ jobs:
           CLEAN: true
 
       # note how we use the PyPI tokens
-      - name: Upload to Azure PyPi (disabled)
+      - name: Upload to Private PyPi
         run: |
           pip install twine
-          # twine upload --skip-existing ./**/*.whl
+          python -m twine upload --skip-existing ./**/*.whl
+          python -m twine upload --skip-existing ./**/*.tar.gz
         env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+          TWINE_USERNAME: PAT
+          TWINE_PASSWORD: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
+          TWINE_REPOSITORY_URL: https://pkgs.dev.azure.com/ansys/_packaging/ansys/pypi/upload
 
       - name: Release
         uses: softprops/action-gh-release@v1
