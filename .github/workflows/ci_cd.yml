@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: py-mel-logging-wheel
-          path: dist/py_mel_logging-0.2.0.dev4-py3-none-any.whl
+          path: dist/py_mel_logging-0.2.0-py3-none-any.whl
           retention-days: 7
 
   testing:
@@ -99,7 +99,7 @@ jobs:
         run: pip install .[test]
 
       - name: Install Wheel
-        run: pip install --force-reinstall -v py_mel_logging-0.2.0.dev4-py3-none-any.whl
+        run: pip install --force-reinstall -v py_mel_logging-0.2.0-py3-none-any.whl
 
       - name: Unit testing
         run: |
