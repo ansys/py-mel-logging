@@ -211,8 +211,7 @@ jobs:
       - name: Upload to Private PyPi
         run: |
           pip install twine
-          python -m twine upload --skip-existing ./**/*.whl
-          python -m twine upload --skip-existing ./**/*.tar.gz
+          python -m twine upload --skip-existing ./**/*.{whl,tar.gz}
         env:
           TWINE_USERNAME: PAT
           TWINE_PASSWORD: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
