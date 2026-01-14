@@ -62,11 +62,11 @@ jobs:
           path: src/py_mel_logging/dlls
           retention-days: 7
 
-      - name: Upload wheel
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: "${{ env.LIBRARY_NAME }}-artifacts"
-          path: dist/py_mel_logging-0.2.0-py3-none-any.whl
+          path: dist/*
           retention-days: 7
 
   testing:
@@ -173,18 +173,6 @@ jobs:
           FOLDER: doc/build/html
           CLEAN: true
           single-commit: true
-  
-  test-release:
-    name: "test: Release project to private"
-    needs: [build, testing, style, docs]
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Release to the private PyPI repository"
-        uses: ansys/actions/release-pypi-private@v10
-        with:
-          library-name: ${{ env.LIBRARY_NAME }}
-          twine-username: "__token__"
-          twine-token: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
 
   Release:
     if: contains(github.ref, 'refs/tags')
