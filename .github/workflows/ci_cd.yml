@@ -11,7 +11,7 @@ on:
       - main
 
 env:
-  MAIN_PYTHON_VERSION: "3.8"
+  MAIN_PYTHON_VERSION: "3.9"
   LIBRARY_NAME: "py-mel-logging-0.2.0"
 
 jobs:
@@ -176,7 +176,7 @@ jobs:
           single-commit: true
 
   build-library:
-    name: "Build library basic example"
+    name: "Build wheel"
     runs-on: ubuntu-latest
     needs: [build, testing]
     steps:
