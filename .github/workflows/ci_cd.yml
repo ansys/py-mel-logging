@@ -62,18 +62,11 @@ jobs:
           path: src/py_mel_logging/dlls
           retention-days: 7
 
-      - name: Upload wheel 
-        uses: actions/upload-artifact@v4 
-        with: 
-          name: "${{ env.LIBRARY_NAME }}-artifacts" 
-          path: dist/py_mel_logging-0.2.0-py3-none-any.whl 
-          retention-days: 7 
-      
-      - name: Upload .tar.gz 
-        uses: actions/upload-artifact@v4 
-        with: 
-          name: "${{ env.LIBRARY_NAME }}-artifacts" 
-          path: dist/py_mel_logging-0.2.0.tar.gz 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: "${{ env.LIBRARY_NAME }}-artifacts"
+          path: dist/*
           retention-days: 7
 
   testing:
