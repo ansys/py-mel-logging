@@ -211,7 +211,7 @@ jobs:
       - name: Upload to Private PyPi
         run: |
           pip install twine
-          python -m twine upload dist/*.whl dist/*.tar.gz
+          python -m twine upload py_mel_logging-0.2.0-py3-none-any.whl
         env:
           TWINE_USERNAME: PAT
           TWINE_PASSWORD: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
