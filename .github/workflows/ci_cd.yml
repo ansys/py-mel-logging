@@ -12,7 +12,7 @@ on:
 
 env:
   MAIN_PYTHON_VERSION: "3.9"
-  LIBRARY_NAME: "py-mel-logging-0.2.0"
+  LIBRARY_NAME: "py-mel-logging"
 
 jobs:
 
@@ -107,7 +107,7 @@ jobs:
       - name: Download wheel
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.LIBRARY_NAME }}
+          name: "${{ env.LIBRARY_NAME }}-artifacts"
 
       - name: Install library, with test extra
         run: pip install .[test]
