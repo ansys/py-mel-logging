@@ -10,6 +10,9 @@ on:
     branches:
       - main
 
+env:
+  LIBRARY_NAME: "py-mel-logging-wheel"
+
 jobs:
 
   style:
@@ -51,7 +54,7 @@ jobs:
       - name: Create wheel
         run: |
           pip install poetry
-          poetry build -f wheel -vvv
+          poetry build -vvv
 
       - uses: actions/upload-artifact@v4
         with:
@@ -59,11 +62,11 @@ jobs:
           path: src/py_mel_logging/dlls
           retention-days: 7
 
-      - name: Upload wheel
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: py-mel-logging-wheel
-          path: dist/py_mel_logging-0.2.0-py3-none-any.whl
+          name: "${{ env.LIBRARY_NAME }}-artifacts"
+          path: dist/*
           retention-days: 7
 
   testing:
@@ -93,13 +96,13 @@ jobs:
       - name: Download wheel
         uses: actions/download-artifact@v4
         with:
-          name: py-mel-logging-wheel
+          name: "${{ env.LIBRARY_NAME }}-artifacts"
 
       - name: Install library, with test extra
         run: pip install .[test]
 
       - name: Install Wheel
-        run: pip install --force-reinstall -v py_mel_logging-0.2.0-py3-none-any.whl
+        run: pip install --force-reinstall -v py_mel_logging-0.2.1.dev0-py3-none-any.whl
 
       - name: Unit testing
         run: |
@@ -185,7 +188,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: py-mel-logging-wheel
+          name: "${{ env.LIBRARY_NAME }}-artifacts"
 
 #      - uses: actions/download-artifact@v2
 #        with:
@@ -207,16 +210,13 @@ jobs:
           FOLDER: ~/html
           CLEAN: true
 
-      # note how we use the PyPI tokens
-      - name: Upload to Private PyPi
-        run: |
-          pip install twine
-          python -m twine upload py_mel_logging-0.2.0-py3-none-any.whl
-        env:
-          TWINE_USERNAME: PAT
-          TWINE_PASSWORD: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
-          TWINE_REPOSITORY_URL: https://pkgs.dev.azure.com/ansys/_packaging/ansys/pypi/upload
-
+      - name: "Release to the private PyPI repository"
+        uses: ansys/actions/release-pypi-private@v10
+        with:
+          library-name: ${{ env.LIBRARY_NAME }}
+          twine-username: "__token__"
+          twine-token: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
+  
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
