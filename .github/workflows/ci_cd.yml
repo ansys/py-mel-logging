@@ -52,10 +52,10 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Create wheel
-        run: |
-          pip install poetry
-          poetry build -f wheel -vvv
+      # - name: Create wheel
+      #   run: |
+      #     pip install poetry
+      #     poetry build -f wheel -vvv
 
       - uses: actions/upload-artifact@v4
         with:
@@ -63,16 +63,26 @@ jobs:
           path: src/py_mel_logging/dlls
           retention-days: 7
 
-      - name: Upload wheel
-        uses: actions/upload-artifact@v4
+      # - name: Upload wheel
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: py-mel-logging-wheel
+      #     path: dist/py_mel_logging-0.2.0-py3-none-any.whl
+      #     retention-days: 7
+
+  build-library:
+    name: "Build wheel"
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: ansys/actions/build-library@v10
         with:
-          name: py-mel-logging-wheel
-          path: dist/py_mel_logging-0.2.0-py3-none-any.whl
-          retention-days: 7
+          library-name: ${{ env.LIBRARY_NAME }}
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
   testing:
     name: Testing
-    needs: [build]
+    needs: [build, build-library]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -97,7 +107,7 @@ jobs:
       - name: Download wheel
         uses: actions/download-artifact@v4
         with:
-          name: py-mel-logging-wheel
+          name: ${{ env.LIBRARY_NAME }}
 
       - name: Install library, with test extra
         run: pip install .[test]
@@ -174,29 +184,7 @@ jobs:
           FOLDER: doc/build/html
           CLEAN: true
           single-commit: true
-
-  build-library:
-    name: "Build wheel"
-    runs-on: ubuntu-latest
-    needs: [build, testing]
-    steps:
-      - uses: ansys/actions/build-library@v10
-        with:
-          library-name: ${{ env.LIBRARY_NAME }}
-          python-version: ${{ env.MAIN_PYTHON_VERSION }}
   
-  test-release:
-    name: "test: Release project to private"
-    needs: [build-library]
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Release to the private PyPI repository"
-        uses: ansys/actions/release-pypi-private@v10
-        with:
-          library-name: ${{ env.LIBRARY_NAME }}
-          twine-username: "__token__"
-          twine-token: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
-
   Release:
     if: contains(github.ref, 'refs/tags')
     needs: [build, testing, style, docs]
@@ -211,7 +199,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: py-mel-logging-wheel
+          name: ${{ env.LIBRARY_NAME }}
 
 #      - uses: actions/download-artifact@v2
 #        with:
@@ -233,16 +221,13 @@ jobs:
           FOLDER: ~/html
           CLEAN: true
 
-      # note how we use the PyPI tokens
-      - name: Upload to Private PyPi
-        run: |
-          pip install twine
-          python -m twine upload py_mel_logging-0.2.0-py3-none-any.whl
-        env:
-          TWINE_USERNAME: PAT
-          TWINE_PASSWORD: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
-          TWINE_REPOSITORY_URL: https://pkgs.dev.azure.com/ansys/_packaging/ansys/pypi/upload
-
+      - name: "Release to the private PyPI repository"
+        uses: ansys/actions/release-pypi-private@v10
+        with:
+          library-name: ${{ env.LIBRARY_NAME }}
+          twine-username: "__token__"
+          twine-token: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
+  
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
