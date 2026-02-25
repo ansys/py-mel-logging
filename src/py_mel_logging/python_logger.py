@@ -2,8 +2,8 @@
 import logging
 import os
 import sys
+from collections.abc import Callable
 from string import Template
-from typing import Callable
 from typing import TypeVar
 
 import clr  # type: ignore
