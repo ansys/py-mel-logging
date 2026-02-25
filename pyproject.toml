@@ -30,7 +30,7 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = "<=3.13,>=3.10"
+python = "<3.14,>=3.10"
 # LTTODO: Use next alpha when available.
 # LTTODO: Use official release when available.
 pythonnet = ">=3.0.0"
