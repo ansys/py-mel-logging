@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "py-mel-logging"
-version = "0.2.1-dev"
+version = "0.2.2-dev"
 
 description = "Python for Microsoft.Extensions.Logging library"
 readme = "README.rst"
@@ -25,12 +25,11 @@ packages = [
     { include = "py_mel_logging", from = "src" },
 ]
 include = [
-    "py.typed",
-    "src/py_mel_logging/dlls/netstandard2.0/*.dll"
+    { path = "src/py_mel_logging/dlls/netstandard2.0/*.dll", format = ["sdist", "wheel"] }
 ]
 
 [tool.poetry.dependencies]
-python = "<3.13,>=3.8"
+python = "<3.14,>=3.10"
 # LTTODO: Use next alpha when available.
 # LTTODO: Use official release when available.
 pythonnet = ">=3.0.0"
@@ -56,13 +55,13 @@ dev = ["Sphinx", "numpydoc", "ansys_sphinx_theme", "sphinx-copybutton",
 
 [tool.black]
 line-length = 100
-target-version = ['py38']
+target-version = ['py310']
 
 [tool.pydocstyle]
 convention = "numpy"
 
 [tool.mypy]
-python_version = 3.8
+python_version = '3.10'
 strict = false # set to 'true' for stricter type checking
 mypy_path = "src"
 namespace_packages = true

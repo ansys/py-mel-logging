@@ -6,7 +6,7 @@ PyAnsys Microsoft Extensions Logging
    :target: https://docs.pyansys.com/
    :alt: PyAnsys
 
-.. |python| image:: https://img.shields.io/badge/Python-%3E%3D3.8-blue
+.. |python| image:: https://img.shields.io/badge/Python-%3E%3D3.10-blue
    :target: https://pypi.org/project/py-cam-client/
    :alt: Python
 
@@ -38,8 +38,8 @@ dependency injection framework.
 
 Installation
 ------------
-The ``py-mel-logging`` package currently supports Python 3.8 through
-3.10 on Windows and Linux. This package is not currently available on
+The ``py-mel-logging`` package currently supports Python 3.10 through
+3.13 on Windows and Linux. This package is not currently available on
 PyPI, but will be when it is ready for use.
 At that time you can install ``py-mel-logging`` with:
 
@@ -67,7 +67,7 @@ This creates a new virtual environment, which can be activated with
 
 .. code::
 
-   poetry shell
+   poetry env activate
 
 
 Documentation
@@ -89,7 +89,7 @@ on Windows. Make sure the required dependencies are installed with:
 
 .. code::
 
-    pip install -E docs
+    poetry install -E docs
 
 Usage
 -----
@@ -116,7 +116,7 @@ Dependencies required for testing can be installed via:
 
 .. code::
 
-    pip install -E test
+    poetry install -E test
 
 The tests can then be run via pytest.
 
