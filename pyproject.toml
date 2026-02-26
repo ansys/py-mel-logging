@@ -25,8 +25,7 @@ packages = [
     { include = "py_mel_logging", from = "src" },
 ]
 include = [
-    "py.typed",
-    "src/py_mel_logging/dlls/netstandard2.0/*.dll"
+    { path = "src/py_mel_logging/dlls/netstandard2.0/*.dll", format = ["sdist", "wheel"] }
 ]
 
 [tool.poetry.dependencies]
