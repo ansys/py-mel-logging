@@ -123,4 +123,4 @@ The tests can then be run via pytest.
 
 License
 -------
-py-pacz is licensed under the MIT license.
+``py-mel-logging`` is licensed under the MIT license.
